@@ -2,7 +2,6 @@ package com.example.studytoursystem.service;
 
 import com.example.studytoursystem.model.Location;
 import com.example.studytoursystem.model.LocationQuery;
-
 import java.util.List;
 
 public interface LocationService {

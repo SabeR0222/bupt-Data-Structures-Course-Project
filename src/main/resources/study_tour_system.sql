@@ -46,7 +46,7 @@ DROP TABLE IF EXISTS `locations`;
 CREATE TABLE `locations` (
   `location_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `type` enum('学校','景区') DEFAULT NULL,
+  `type` int DEFAULT NULL,
   `keyword` varchar(255) DEFAULT NULL,
   `popularity` int DEFAULT NULL,
   `evaluation` int DEFAULT NULL,
@@ -57,18 +57,18 @@ CREATE TABLE `locations` (
 -- Records of locations
 -- ----------------------------
 BEGIN;
-INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (1, '北京邮电大学', '学校', '邮电', 99, 10);
-INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (2, '北京航空航天大学', '学校', '航空航天', 90, 9);
-INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (3, '北京理工大学', '学校', '理工', 80, 8);
-INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (4, '北京大学', '学校', '综合', 85, 9);
-INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (5, '厦门大学', '学校', '综合', 99, 10);
-INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (6, '南京理工大学', '学校', '理工', 95, 9);
-INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (7, '东方明珠', '景区', '建筑', 97, 10);
-INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (8, '外滩', '景区', '街道', 83, 7);
-INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (9, '佘山国家森林公园', '景区', '公园', 98, 8);
-INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (10, '南京路步行街', '景区', '街道', 87, 9);
-INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (11, '世纪公园', '景区', '公园', 90, 6);
-INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (12, '宋庆龄故居', '景区', '建筑', 96, 10);
+INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (1, '北京邮电大学', 0, '邮电', 99, 10);
+INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (2, '北京航空航天大学', 0, '航空航天', 90, 9);
+INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (3, '北京理工大学', 0, '理工', 80, 8);
+INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (4, '北京大学', 0, '综合', 85, 9);
+INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (5, '厦门大学', 0, '综合', 99, 10);
+INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (6, '南京理工大学', 0, '理工', 95, 9);
+INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (7, '东方明珠', 1, '建筑', 97, 10);
+INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (8, '外滩', 1, '街道', 83, 7);
+INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (9, '佘山国家森林公园', 1, '公园', 98, 8);
+INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (10, '南京路步行街', 1, '街道', 87, 9);
+INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (11, '世纪公园', 1, '公园', 90, 6);
+INSERT INTO `locations` (`location_id`, `name`, `type`, `keyword`, `popularity`, `evaluation`) VALUES (12, '宋庆龄故居', 1, '建筑', 96, 10);
 COMMIT;
 
 -- ----------------------------

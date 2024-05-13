@@ -3,12 +3,12 @@ package com.example.studytoursystem.model;
 import lombok.Data;
 
 @Data
-public class Location {
+public class Journal {
+    private Integer journalId;
+    private String title;
+    private String content;
     private Integer locationId;
-    private String name;
-    //0是景点，1是学校
-    private Integer type;
-    private String keyword;
     private Integer popularity;
     private Integer evaluation;
+    private Integer userId;
 }
