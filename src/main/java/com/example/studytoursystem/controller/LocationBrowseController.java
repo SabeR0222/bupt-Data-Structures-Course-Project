@@ -1,21 +1,30 @@
 package com.example.studytoursystem.controller;
 
+import com.example.studytoursystem.model.Location;
+import com.example.studytoursystem.model.LocationBrowseCount;
+import com.example.studytoursystem.model.Result;
 import com.example.studytoursystem.service.LocationBrowseCountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/locationBrowse")
 public class LocationBrowseController {
     @Autowired
     private LocationBrowseCountService locationBrowseCountService;
-    @PostMapping ("/getLocationBrowseCount")
-    public Integer getLocationBrowseCount(Integer locationId) {
-        return locationBrowseCountService.getLocationBrowseCount(locationId);
+    @PostMapping ("/getLocationBrowseCount/{locationId}")
+    public Result<Integer> getLocationBrowseCount(@PathVariable Integer locationId) {
+        System.out.println("locationId: " + locationId);
+        Integer res = locationBrowseCountService.getLocationBrowseCount(locationId);
+        return Result.success(res);
     }
 
-    @PostMapping ("/update")
-    public void update(Integer userId, Integer location, Integer count) {
-        locationBrowseCountService.update(userId, location, count);
+    @PostMapping ("/setCount")
+    public Result setLocationBrowseCount(@RequestBody LocationBrowseCount locationBrowseCount) {
+        locationBrowseCountService.setLocationBrowseCount(locationBrowseCount);
+        System.out.println(locationBrowseCount);
+        return Result.success();
     }
 }
