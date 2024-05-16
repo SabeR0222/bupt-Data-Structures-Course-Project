@@ -8,5 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface LocationMapper {
-    @Select("select * from locations") List<Location> getAllLocation();
+    @Select("select * from locations")
+    List<Location> getAllLocation();
 }
