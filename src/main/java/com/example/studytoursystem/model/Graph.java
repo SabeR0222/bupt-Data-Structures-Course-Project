@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Data
 public class Graph {
-    private Map<Integer, List<EdgeNode>> adjList;
+    private Map<Integer, List<EdgeNode>> adjList; //Integer是起点id
 
     public Graph(List<Vertex> vertexList, List<Edge> edgeList) {
         adjList = new HashMap<>();

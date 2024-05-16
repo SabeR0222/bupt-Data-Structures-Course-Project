@@ -18,7 +18,7 @@ public class PathController {
     private PathService pathService;
 
     @PostMapping("/query")
-    public Result<int[]> getPath(@RequestBody PathQuery query) {
+    public Result<List<Integer>> getPath(@RequestBody PathQuery query) {
         return Result.success(pathService.getPath(query));
     }
 }

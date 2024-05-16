@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class Vertex {
-    private int vertexId;
-    private int x;
-    private int y;
+    private Integer vertexId;
+    private Integer x;
+    private Integer y;
     private String label;
+    private Integer type;
 }
