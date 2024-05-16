@@ -6,13 +6,13 @@ import com.example.studytoursystem.model.Graph;
 import java.util.*;
 
 public class Dijkstra {
-    private Graph graph;
-    private int srcId;
-    private int destId;
-    private int strategy;
-    private PriorityQueue<EdgeNode> pq; // 优先队列用于存放待访问的节点
-    private Map<Integer, Integer> distTo; // 存储源节点到各节点的最短距离
-    private Map<Integer, EdgeNode> edgeFrom; // 记录到达每个节点的最短路径上的前一个节点
+    private final Graph graph;
+    private final int srcId;
+    private final int destId;
+    private final int strategy;
+    private final PriorityQueue<EdgeNode> pq; // 优先队列用于存放待访问的节点
+    private final Map<Integer, Integer> distTo; // 存储源节点到各节点的最短距离
+    private final Map<Integer, EdgeNode> edgeFrom; // 记录到达每个节点的最短路径上的前一个节点
     public Dijkstra(Graph graph, int srcId, int destId, int strategy) {
         this.graph = graph;
         this.srcId = srcId;
