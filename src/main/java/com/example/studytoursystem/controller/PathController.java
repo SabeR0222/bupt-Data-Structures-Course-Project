@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/path")
 public class PathController {
     @Autowired
     private PathService pathService;
 
-    @PostMapping("/query")
+    @PostMapping("/path")
     public Result<List<Integer>> getPath(@RequestBody PathQuery query) {
         return Result.success(pathService.getPath(query));
     }
