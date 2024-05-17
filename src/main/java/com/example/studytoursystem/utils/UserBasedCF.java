@@ -1,4 +1,4 @@
-package utils;
+package com.example.studytoursystem.utils;
 
 import java.util.*;
 import java.util.HashMap;

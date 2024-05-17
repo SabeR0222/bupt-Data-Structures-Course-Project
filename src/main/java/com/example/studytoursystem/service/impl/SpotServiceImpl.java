@@ -7,7 +7,7 @@ import com.example.studytoursystem.model.Vertex;
 import com.example.studytoursystem.service.SpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utils.InsertSort;
+import com.example.studytoursystem.utils.InsertSort;
 
 import java.util.ArrayList;
 import java.util.Comparator;
