@@ -20,26 +20,6 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for journals
--- ----------------------------
-DROP TABLE IF EXISTS `journals`;
-CREATE TABLE `journals` (
-  `journal_id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) DEFAULT NULL,
-  `location_id` int DEFAULT NULL,
-  `popularity` int DEFAULT NULL,
-  `evaluation` int DEFAULT NULL,
-  `user_id` int DEFAULT NULL,
-  PRIMARY KEY (`journal_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- ----------------------------
--- Records of journals
--- ----------------------------
-BEGIN;
-COMMIT;
-
--- ----------------------------
 -- Table structure for locations
 -- ----------------------------
 DROP TABLE IF EXISTS `locations`;
@@ -151,6 +131,32 @@ INSERT INTO location_browse_counts (user_id, location_id, count) VALUES (11, 5, 
 
 COMMIT;
 
+-- ----------------------------
+-- Table structure for articles
+-- ----------------------------
+DROP TABLE IF EXISTS `articles`;
+CREATE TABLE `articles` (
+    `article_id` int NOT NULL AUTO_INCREMENT,
+    `title` varchar(255) NOT NULL,
+    `location_id` int DEFAULT NULL,
+    `content` blob NOT NULL,
+    `huffman_codes` text DEFAULT NULL,
+    `popularity` int DEFAULT 0,
+    `evaluation` int DEFAULT 0,
+    `user_id` int NOT NULL,
+    PRIMARY KEY (`article_id`),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (location_id) REFERENCES locations(location_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of articles
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+
+
 DROP TABLE IF EXISTS `article_scores`;
 CREATE TABLE article_scores (
     -- 主键由用户ID和地点ID组成，确保每对用户-地点的唯一性
@@ -162,6 +168,6 @@ CREATE TABLE article_scores (
     PRIMARY KEY (user_id, article_id),
 
     -- 外键约束，确保用户ID存在于users表中
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (article_id) REFERENCES articles(article_id)
 );
