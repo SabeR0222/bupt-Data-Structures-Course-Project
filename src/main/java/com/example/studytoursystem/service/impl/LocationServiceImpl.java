@@ -57,7 +57,7 @@ public class LocationServiceImpl implements LocationService{
         if (query.getName() != null) {
             for(Location location : allLocation){
                 BoyerMooreChinese boyerMooreChinese = new BoyerMooreChinese(query.getName());
-                if(boyerMooreChinese.search(location.getName()) >= location.getName().length()){
+                if(boyerMooreChinese.searchAll(location.getName()).isEmpty()){
                     res.remove(location);
                 }
             }

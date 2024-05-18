@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ArticleServicelmpl implements ArticleService {
@@ -30,29 +27,38 @@ public class ArticleServicelmpl implements ArticleService {
     UserMapper userMapper;
 
     @Override
-    public void add(int userId, String title, String content, int locationId) {
-        HashMap<Character, String> huffmanCodes = Codes(content);
-        byte[] content1 = compression(huffmanCodes,content);
-        String huffmanCodesJson = huffmanCodesJson(huffmanCodes);
-        articleMapper.add(userId, title, content1, huffmanCodesJson, locationId);
-    }
-
-    @Override
-    public void delete(int articleId) {
-        articleMapper.delete(articleId);
-    }
-
-    @Override
-    public boolean update(int articleId, int userId, String title, String content, int locationId) {
-        Integer CurrentUserId = ThreadLocalContent.getData();
-        if (CurrentUserId != userId) {
+    public boolean add(String title, String content, int locationId) {
+        if(content == null){
             return false;
         }
         HashMap<Character, String> huffmanCodes = Codes(content);
         byte[] content1 = compression(huffmanCodes,content);
         String huffmanCodesJson = huffmanCodesJson(huffmanCodes);
+        Integer userId = ThreadLocalContent.getData();
+        articleMapper.add(userId, title, content1, huffmanCodesJson, locationId);
+        return true;
+    }
+
+    @Override
+    public boolean delete(int articleId, int userId) {
+        Integer CurrentUserId = ThreadLocalContent.getData();
+        if (CurrentUserId != userId) {
+            return false;
+        }
+        articleMapper.delete(articleId);
+        return true;
+    }
+
+    @Override
+    public boolean update(int articleId, String title, String content, int locationId) {
+        if(content == null)
+            return false;
+        HashMap<Character, String> huffmanCodes = Codes(content);
+        byte[] content1 = compression(huffmanCodes,content);
+        String huffmanCodesJson = huffmanCodesJson(huffmanCodes);
         articleMapper.update(articleId, title, content1, huffmanCodesJson, locationId);
         return true;
+
     }
 
     @Override
@@ -96,6 +102,21 @@ public class ArticleServicelmpl implements ArticleService {
         }
         return res;
     }
+
+    @Override
+    public List<Map.Entry<Integer, Integer>> searchWord(String text, String word) {
+        List<Map.Entry<Integer, Integer>> res = new ArrayList<>();
+        List<Integer> places = new BoyerMooreChinese(word).searchAll(text);
+        Integer n = word.length();
+        if(places.isEmpty()){
+            return null;
+        }
+        for(int i = 0; i < places.size(); i++) {
+            res.add(new AbstractMap.SimpleEntry<>(places.get(i), i + n));
+        }
+        return res;
+    }
+
 
     @Override
     public String getContent(Integer articleId) {

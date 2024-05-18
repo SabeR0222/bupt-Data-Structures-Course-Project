@@ -1,18 +1,17 @@
 package com.example.studytoursystem.utils;
 
-
 import java.util.LinkedList;
 
-public class CustomHashMap<K, V> {
+public class HashTable<K, V> {
     private static final int DEFAULT_CAPACITY = 16;
     private final LinkedList<Entry<K, V>>[] buckets;
     private int size;
 
-    public CustomHashMap() {
+    public HashTable() {
         this(DEFAULT_CAPACITY);
     }
 
-    public CustomHashMap(int capacity) {
+    public HashTable(int capacity) {
         this.buckets = new LinkedList[capacity];
         this.size = 0;
     }
