@@ -1,4 +1,4 @@
-package utils;
+package com.example.studytoursystem.utils;
 
 import com.example.studytoursystem.model.EdgeNode;
 import com.example.studytoursystem.model.Graph;

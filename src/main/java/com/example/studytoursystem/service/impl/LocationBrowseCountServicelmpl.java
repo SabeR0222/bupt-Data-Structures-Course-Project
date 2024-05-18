@@ -3,6 +3,7 @@ package com.example.studytoursystem.service.impl;
 import com.example.studytoursystem.mapper.LocationBrowseCountMapper;
 import com.example.studytoursystem.model.ArticleScore;
 import com.example.studytoursystem.model.LocationBrowseCount;
+import com.example.studytoursystem.model.LocationBrowsePlus;
 import com.example.studytoursystem.service.LocationBrowseCountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,14 +46,14 @@ public class LocationBrowseCountServicelmpl implements LocationBrowseCountServic
 
 
     @Override
-    public void setLocationBrowseCount(LocationBrowseCount locationBrowseCount) {
+    public void setLocationBrowseCount(LocationBrowsePlus locationBrowsePlus) {
         List<LocationBrowseCount> locationBrowseCounts = locationBrowseCountMapper.getAllLocationBrowseCounts();
         for(LocationBrowseCount locationBrowseCount1 : locationBrowseCounts){
-            if(locationBrowseCount1.getUserId() == locationBrowseCount.getUserId() && locationBrowseCount1.getLocationId() == locationBrowseCount.getLocationId()) {
-                locationBrowseCountMapper.update(locationBrowseCount.getUserId(), locationBrowseCount.getLocationId(), locationBrowseCount.getCount());
+            if(locationBrowseCount1.getUserId() == locationBrowsePlus.getUserId() && locationBrowseCount1.getLocationId() == locationBrowsePlus.getLocationId()) {
+                locationBrowseCountMapper.update(locationBrowsePlus.getUserId(), locationBrowsePlus.getLocationId(), locationBrowseCount1.getCount() + 1);
                 return;
             }
         }
-        locationBrowseCountMapper.add(locationBrowseCount.getUserId(), locationBrowseCount.getLocationId(), locationBrowseCount.getCount());
+        locationBrowseCountMapper.add(locationBrowsePlus.getUserId(), locationBrowsePlus.getLocationId(), 1);
     }
 }

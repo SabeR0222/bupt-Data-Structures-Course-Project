@@ -4,17 +4,12 @@ import com.example.studytoursystem.mapper.LocationMapper;
 import com.example.studytoursystem.mapper.UserMapper;
 import com.example.studytoursystem.model.Location;
 import com.example.studytoursystem.model.LocationQuery;
-import com.example.studytoursystem.model.User;
-import com.example.studytoursystem.service.LocationBrowseCountService;
 import com.example.studytoursystem.service.LocationService;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utils.BoyerMooreChinese;
-import utils.HeapSort;
-import utils.UserBasedCF;
+import com.example.studytoursystem.utils.BoyerMooreChinese;
+import com.example.studytoursystem.utils.HeapSort;
 
-import javax.xml.crypto.Data;
 import java.util.*;
 
 @Service

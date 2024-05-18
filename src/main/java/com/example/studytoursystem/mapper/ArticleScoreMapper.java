@@ -15,7 +15,7 @@ public interface ArticleScoreMapper {
     ArticleScore findByUserId(Integer articleId);
 
     @Select("select * from articleScores")
-    List<ArticleScore> getAllUsers();
+    List<ArticleScore> getAllScores();
 
     @Update("update articleScores set score = (#{score}) where (article_id = #{articleId}, score = #{score})")
     void update(int userId, int articleId, int score);

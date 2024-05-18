@@ -1,6 +1,7 @@
 package com.example.studytoursystem.controller;
 
 import com.example.studytoursystem.model.Result;
+import com.example.studytoursystem.utils.ThreadLocalContent;
 import com.example.studytoursystem.model.User;
 import com.example.studytoursystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -27,9 +27,16 @@ public class UserController {
             return Result.error("用户名或密码错误");
         }
         if(password.equals(user.getPassword())){
+            ThreadLocalContent.setData(user.getUserId());
             return Result.success();
         }
         return Result.error("用户名或密码错误");
+    }
+
+    @PostMapping("/logout")
+    public Result logout(){
+        ThreadLocalContent.removeData();
+        return Result.success();
     }
 
     @PostMapping("/register")

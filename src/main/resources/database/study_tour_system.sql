@@ -23,7 +23,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for locations
 -- ----------------------------
 DROP TABLE IF EXISTS `locations`;
-CREATE TABLE `locations` IF Not EXISTS `locations`(
+CREATE TABLE IF Not EXISTS `locations`(
   `location_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `type` int DEFAULT NULL,

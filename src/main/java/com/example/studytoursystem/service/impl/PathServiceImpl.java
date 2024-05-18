@@ -7,7 +7,7 @@ import com.example.studytoursystem.model.PathQuery;
 import com.example.studytoursystem.service.PathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utils.Dijkstra;
+import com.example.studytoursystem.utils.Dijkstra;
 
 import java.util.ArrayList;
 import java.util.List;

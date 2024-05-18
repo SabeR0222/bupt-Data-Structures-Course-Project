@@ -22,7 +22,7 @@ public class LocationController {
         return Result.success(list);
     }
 
-    @PostMapping("")
+    @GetMapping("/query")
     public Result<List<Location>> getQueryLocation(@RequestBody LocationQuery query){
         System.out.println(query);
         List<Location> list = locationService.getQueryLocation(query);

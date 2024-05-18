@@ -1,4 +1,4 @@
-package utils;
+package com.example.studytoursystem.utils;
 
 import org.springframework.stereotype.Repository;
 

@@ -1,9 +1,8 @@
-package utils;
+package com.example.studytoursystem.utils;
 
 import java.util.Comparator;
 
 
-import java.util.Arrays;
 import java.util.List;
 
 public class HeapSort<T> {
@@ -11,11 +10,13 @@ public class HeapSort<T> {
         T[] array = list.toArray((T[]) new Object[0]);
         sort(array, comparator);
         list.clear();
-        list.addAll(Arrays.asList(array));
+        for (int i = 0; i < array.length; i++) {
+            list.add(array[i]);
+        }
     }
 
     public void sort(T[] array, Comparator<? super T> comparator) {
-        int n = array.length;
+        int n = Math.min(array.length, 10); // 只排序前10个元素
 
         // 构建大顶堆
         for (int i = n / 2 - 1; i >= 0; i--)
