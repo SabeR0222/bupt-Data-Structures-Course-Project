@@ -29,6 +29,7 @@ public class ArticleController {
     @PostMapping("/update")
     public void update(@RequestBody NewArticleAdd newArticleAdd)
     {
+        //articleId
         articleService.update(newArticleAdd.getUserId(), newArticleAdd.getTitle(), newArticleAdd.getContent(), newArticleAdd.getLocationId());
     }
 
@@ -40,12 +41,13 @@ public class ArticleController {
     }
 
     //get
-    @GetMapping("/getArticle/{articleId}")
-    public Result<Article> getArticle(@PathVariable Integer articleId)
+    @GetMapping("/getRecommendArticle")
+    public Result<List<SimplifiedArticle>> getRecommendArticle()
     {
-        Article article = articleService.getArticle(articleId);
-        return Result.success(article);
+        List<SimplifiedArticle> recommendArticle = articleService.recommendArticle();
+        return Result.success(recommendArticle);
     }
+
 
     //content
     @GetMapping("/getContent/{articleId}")
