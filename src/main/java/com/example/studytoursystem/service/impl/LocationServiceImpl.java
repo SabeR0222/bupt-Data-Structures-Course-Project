@@ -62,20 +62,22 @@ public class LocationServiceImpl implements LocationService{
                 }
             }
         }
-        if (query.getKeyword() != null) {
+        if (query.getType() != null) {
             Iterator<Location> iterator = res.iterator();
             while (iterator.hasNext()) {
                 Location location = iterator.next();
-                if (!location.getKeyword().equals(query.getKeyword()) ) {
+                if (!location.getType().equals(query.getType()) ) {
                     iterator.remove();
                 }
             }
         }
+        System.out.println(res);
         if (query.getKeyword() != null) {
             Iterator<Location> iterator = res.iterator();
             while (iterator.hasNext()) {
                 Location location = iterator.next();
-                if (location.getType() != query.getType()) {
+                if (!Objects.equals(location.getKeyword(), query.getKeyword())) {
+                    System.out.println(location.getKeyword());
                     iterator.remove();
                 }
             }
@@ -88,7 +90,7 @@ public class LocationServiceImpl implements LocationService{
                 heapSort.sort(res, (o1, o2) -> o2.getEvaluation() - o1.getEvaluation());
             }
         }
-
+        System.out.println(res);
         List<Location> res2 = new ArrayList<>();
         for(int i = 0; i < (res.size() > 10 ? 10 : res.size()); i++){
             res2.add(res.get(i));
