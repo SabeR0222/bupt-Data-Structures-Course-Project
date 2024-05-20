@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean login(Map<String, String> loginData) {
+    public Integer login(Map<String, String> loginData) {
         String username = loginData.get("username");
         String password = loginData.get("password");
         List<User> users = userMapper.getAllUsers();
@@ -28,12 +28,12 @@ public class UserServiceImpl implements UserService {
             if(user.getUsername().equals(username)){
                 user1 = user;
                 if(password.equals(user1.getPassword())){
-                    return true;
+                    return user1.getUserId();
                 }
-                return false;
+                return null;
             }
         }
-        return false;
+        return null;
     }
 
     @Override

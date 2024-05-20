@@ -8,7 +8,7 @@ import java.util.Map;
 public interface UserService {
     User findByUsername(String username);
 
-    boolean login(Map<String, String> loginData);
+    Integer login(Map<String, String> loginData);
 
     void register(String username, String password);
 }

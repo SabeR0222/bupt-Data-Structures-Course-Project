@@ -19,8 +19,9 @@ public class UserController {
 
     @PostMapping("/login")
     public Result login(@RequestBody Map<String, String> loginData) {
-        if(userService.login(loginData)){
-            return Result.success();
+        Integer userId = userService.login(loginData);
+        if (userId != null) {
+            return Result.success(userId);
         }
         return Result.error("用户名或密码错误");
     }
