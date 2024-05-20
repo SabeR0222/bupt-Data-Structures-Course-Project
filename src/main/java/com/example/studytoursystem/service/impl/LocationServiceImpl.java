@@ -1,14 +1,15 @@
 package com.example.studytoursystem.service.impl;
 
+import com.example.studytoursystem.mapper.LocationBrowseCountMapper;
 import com.example.studytoursystem.mapper.LocationMapper;
 import com.example.studytoursystem.mapper.UserMapper;
 import com.example.studytoursystem.model.Location;
+import com.example.studytoursystem.model.LocationBrowseCount;
 import com.example.studytoursystem.model.LocationQuery;
 import com.example.studytoursystem.service.LocationService;
+import com.example.studytoursystem.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.studytoursystem.utils.BoyerMooreChinese;
-import com.example.studytoursystem.utils.HeapSort;
 
 import java.util.*;
 
@@ -17,15 +18,22 @@ public class LocationServiceImpl implements LocationService{
     @Autowired
     private LocationMapper locationMapper;
 
-//    @Autowired
-//    private LocationBrowseCountService locationBrowseCountService;
+    @Autowired
+    private LocationBrowseCountMapper locationBrowseCountMapper;
 
     @Autowired
     private UserMapper userMapper;
 
+
     @Override
     public List<Location> getLocation() {
         return locationMapper.getAllLocation();
+
+
+    }
+
+    @Override
+    public List<Location> getRecommendLocation(Integer userId) {
 //        List<Location> allLocation = locationMapper.getAllLocation();
 //        List<Location> res2 = new ArrayList<>();
 //        List<User> allUsers = userMapper.getAllUsers();
@@ -47,8 +55,21 @@ public class LocationServiceImpl implements LocationService{
 //        }
 //
 //        return res2;
-
+        List<LocationBrowseCount> locationBrowseCounts = locationBrowseCountMapper.getAllLocationBrowseCounts();
+        Map<Integer, Integer> userViewCounts = new HashMap<>();
+        for(LocationBrowseCount locationBrowseCount : locationBrowseCounts) {
+            if(locationBrowseCount.getUserId() == userId)
+                userViewCounts.put(locationBrowseCount.getLocationId(), locationBrowseCount.getCount());
+        }
+        List<Location> recommendationLocationId =
+                LocationBasedRecommend.LocationBasedRecommend(userViewCounts, locationMapper.getAllLocation());
+        List<Location> res2 = new ArrayList<>();
+        for(int i = 0; i < (recommendationLocationId.size() > 10 ? 10 : recommendationLocationId.size()); i++){
+            res2.add(recommendationLocationId.get(i));
+        }
+        return recommendationLocationId;
     }
+
 
     @Override
     public List<Location> getQueryLocation(LocationQuery query){

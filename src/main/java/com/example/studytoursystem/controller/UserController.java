@@ -1,7 +1,6 @@
 package com.example.studytoursystem.controller;
 
 import com.example.studytoursystem.model.Result;
-import com.example.studytoursystem.utils.ThreadLocalContent;
 import com.example.studytoursystem.model.User;
 import com.example.studytoursystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +19,16 @@ public class UserController {
 
     @PostMapping("/login")
     public Result login(@RequestBody Map<String, String> loginData) {
-        String username = loginData.get("username");
-        String password = loginData.get("password");
-        User user = userService.findByUsername(username);
-        if(user == null) {
-            return Result.error("用户名或密码错误");
-        }
-        if(password.equals(user.getPassword())){
-            ThreadLocalContent.setData(user.getUserId());
+        if(userService.login(loginData)){
             return Result.success();
         }
         return Result.error("用户名或密码错误");
     }
 
-    @PostMapping("/logout")
-    public Result logout(){
-        ThreadLocalContent.removeData();
-        return Result.success();
-    }
+//    @PostMapping("/logout")
+//    public Result logout(){
+//        return Result.success();
+//    }
 
     @PostMapping("/register")
     public Result register(@RequestBody Map<String, String> registerData){

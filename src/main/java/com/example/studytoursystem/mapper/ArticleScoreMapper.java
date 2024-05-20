@@ -11,15 +11,15 @@ import java.util.List;
 
 @Mapper
 public interface ArticleScoreMapper {
-    @Select("select * from article_scores where article_id=#{articleId}")
+    @Select("select * from articleScores where article_id=#{articleId}")
     ArticleScore findByUserId(Integer articleId);
 
-    @Select("select * from article_scores")
+    @Select("select * from articleScores")
     List<ArticleScore> getAllScores();
 
-    @Update("update article_scores set score = (#{score}) where (article_id = #{articleId}, score = #{score})")
+    @Update("update articleScores set score = (#{score}) where (article_id = #{articleId}, score = #{score})")
     void update(int userId, int articleId, int score);
 
-    @Insert("insert into article_scores(user_id, article_id, score) values(#{userId}, #{articleId}, #{score})")
+    @Insert("insert into articleScores(user_id, article_id, score) values(#{userId}, #{articleId}, #{score})")
     void insert(int userId, int articleId, int score);
 }

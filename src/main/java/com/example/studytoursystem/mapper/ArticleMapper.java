@@ -10,7 +10,7 @@ public interface ArticleMapper {
     @Select("select * from articles where article_id = #{articleId}")
     Article findByArticleId(Integer articleId);
 
-    @Insert("insert into articles(user_id, title, content, huffman_codes, location_id) values(#{userId}, #{title}, #{huffmanCodes}, #{locationId})")
+    @Insert("insert into articles(user_id, title, content, huffman_codes, location_id) values(#{userId}, #{title}, #{content1},#{huffmanCodes}, #{locationId})")
     void add(int userId, String title, byte[] content1, String huffmanCodes, int locationId);
 
     @Update("update articles set popularity = (#{popularity}) where (article_id = #{articleId})")

@@ -25,7 +25,6 @@ public class LocationBrowseController {
     @PostMapping ("/setCount")
     public Result setLocationBrowseCount(@RequestBody LocationBrowsePlus locationBrowsePlus) {
         locationBrowseCountService.setLocationBrowseCount(locationBrowsePlus);
-        System.out.println(locationBrowsePlus);
         return Result.success();
     }
 }

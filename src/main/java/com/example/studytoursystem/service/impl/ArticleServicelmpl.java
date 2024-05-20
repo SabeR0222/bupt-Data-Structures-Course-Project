@@ -8,9 +8,7 @@ import com.example.studytoursystem.utils.*;
 import com.example.studytoursystem.service.ArticleService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.net.httpserver.Authenticator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,31 +25,31 @@ public class ArticleServicelmpl implements ArticleService {
     UserMapper userMapper;
 
     @Override
-    public boolean add(String title, String content, int locationId) {
+    public boolean add(Integer userId,String title, String content, int locationId) {
         if(content == null){
             return false;
         }
         HashMap<Character, String> huffmanCodes = Codes(content);
         byte[] content1 = compression(huffmanCodes,content);
         String huffmanCodesJson = huffmanCodesJson(huffmanCodes);
-        Integer userId = ThreadLocalContent.getData();
+        System.out.println("userId: " + userId);
         articleMapper.add(userId, title, content1, huffmanCodesJson, locationId);
         return true;
     }
 
     @Override
     public boolean delete(int articleId, int userId) {
-        Integer CurrentUserId = ThreadLocalContent.getData();
-        if (CurrentUserId != userId) {
+        if (articleMapper.findByArticleId(articleId).getUserId() != userId) {
             return false;
         }
         articleMapper.delete(articleId);
+        articleScoreMapper.delete(articleId);
         return true;
     }
 
     @Override
-    public boolean update(int articleId, String title, String content, int locationId) {
-        if(content == null)
+    public boolean update(int articleId, int userId, String title, String content, int locationId) {
+        if(userId != articleMapper.findByArticleId(articleId).getUserId())
             return false;
         HashMap<Character, String> huffmanCodes = Codes(content);
         byte[] content1 = compression(huffmanCodes,content);
@@ -73,14 +71,15 @@ public class ArticleServicelmpl implements ArticleService {
     }
 
     @Override
-    public List<SimplifiedArticle> recommendArticle() {
+    public List<SimplifiedArticle> recommendArticle(Integer currentUserId) {
         List<ArticleScore> articleScores = articleScoreMapper.getAllScores();
         Map<Integer, Map<Integer, Integer>> IdScoreMap = new HashMap<>();
         HeapSort<ArticleScore> heapSort = new HeapSort<>();
         heapSort.sort(articleScores, (o1,o2) ->o1.getUserId() - o2.getUserId());
         Integer userId = null;
         Map<Integer, Integer> scoreMap = new HashMap<>();
-        for(ArticleScore articleScore : articleScores) {
+        for(int i = 0; i < articleScores.size(); i++) {
+            ArticleScore articleScore = articleScores.get(i);
             if(userId == null || !userId.equals(articleScore.getUserId())){
                 if(!scoreMap.isEmpty()){
                     IdScoreMap.put(userId, scoreMap);
@@ -89,14 +88,20 @@ public class ArticleServicelmpl implements ArticleService {
                 userId = articleScore.getUserId();
             }
             scoreMap.put(articleScore.getArticleId(), articleScore.getScore());
+            if(i == articleScores.size() - 1)
+                IdScoreMap.put(userId, scoreMap);
         }
-        IdScoreMap.put(userId, scoreMap);
-        Integer currentUserId = ThreadLocalContent.getData();
-        List<SimplifiedArticle> res = null;
+        List<SimplifiedArticle> res = new ArrayList<>();
         List<Map.Entry<Integer, Double>> userBasedCF = new UserBasedCF(IdScoreMap).recommend(currentUserId);
         for(Map.Entry<Integer, Double> entry : userBasedCF){
             Article article = articleMapper.findByArticleId(entry.getKey());
             if(article != null){
+                res.add(simplifyArticle(article));
+            }
+        }
+        List<Article> articles = articleMapper.getAllArticle();
+        for(Article article : articles){
+            if(!res.contains(simplifyArticle(article))){
                 res.add(simplifyArticle(article));
             }
         }
@@ -137,13 +142,27 @@ public class ArticleServicelmpl implements ArticleService {
 
     @Override
     public SimplifiedArticle getArticleByTitle(String title) {
+        System.out.println("title: " + title);
         List<Article> articles = articleMapper.getAllArticle();
         for(Article article : articles){
+            System.out.println("? " + article.getTitle());
             if(article.getTitle().equals(title)){
                 return simplifyArticle(article);
             }
         }
         return null;
+    }
+
+    @Override
+    public List<SimplifiedArticle> getArticleByLocation(Integer locationId) {
+        List<Article> articles = articleMapper.getAllArticle();
+        List<SimplifiedArticle> res = new ArrayList<>();
+        for(Article article : articles){
+            if(article.getLocationId() == locationId){
+                res.add(simplifyArticle(article));
+            }
+        }
+        return res;
     }
 
     private HashMap<Character, String> Codes(String content){

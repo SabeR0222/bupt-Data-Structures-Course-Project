@@ -5,8 +5,8 @@ import com.example.studytoursystem.model.Location;
 import java.util.*;
 
 public class LocationBasedRecommend{
-    public List<Integer> LocationBasedRecommend(Map<Integer, Integer> userViewCounts, List<Location> locations) {
-        List<Integer> recommendations = new ArrayList<>();
+    public static List<Location>  LocationBasedRecommend(Map<Integer, Integer> userViewCounts, List<Location> locations) {
+        List<Location> recommendations = new ArrayList<>();
 
         // 将地点按照类型和关键词分类
         Map<String, List<Location>> locationMap = new HashMap<>();
@@ -30,7 +30,7 @@ public class LocationBasedRecommend{
                     if (similarLocations != null) {
                         for (Location similarLocation : similarLocations) {
                             if (!similarLocation.getLocationId().equals(locationId) && !recommendations.contains(similarLocation.getLocationId())) {
-                                recommendations.add(similarLocation.getLocationId());
+                                recommendations.add(similarLocation);
                                 if (recommendations.size() >= 5) {
                                     return recommendations;
                                 }

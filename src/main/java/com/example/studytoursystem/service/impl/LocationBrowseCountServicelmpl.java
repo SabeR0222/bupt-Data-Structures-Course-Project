@@ -15,7 +15,7 @@ import java.util.Map;
 @Service
 public class LocationBrowseCountServicelmpl implements LocationBrowseCountService {
     @Autowired
-    public LocationBrowseCountMapper locationBrowseCountMapper;
+    private LocationBrowseCountMapper locationBrowseCountMapper;
 
 
     @Override
@@ -39,7 +39,6 @@ public class LocationBrowseCountServicelmpl implements LocationBrowseCountServic
                 res += locationBrowseCount.getCount();
             }
         }
-        System.out.println(res);
         return res;
     }
 

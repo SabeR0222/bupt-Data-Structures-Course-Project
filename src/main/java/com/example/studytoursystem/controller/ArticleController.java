@@ -20,31 +20,33 @@ public class ArticleController {
 
     //add
     @PostMapping("/add")
-    public void add(@RequestBody NewArticleAdd newArticleAdd)
+    public Result add(@RequestBody NewArticleAdd newArticleAdd)
     {
-        articleService.add(newArticleAdd.getTitle(), newArticleAdd.getContent(), newArticleAdd.getLocationId());
+        articleService.add(newArticleAdd.getUserId(), newArticleAdd.getTitle(), newArticleAdd.getContent(), newArticleAdd.getLocationId());
+        return Result.success();
     }
 
     //update
     @PostMapping("/update")
-    public void update(@RequestBody NewArticleAdd newArticleAdd)
+    public Result update(@RequestBody NewArticleAdd newArticleAdd)
     {
-        //articleId
-        articleService.update(newArticleAdd.getUserId(), newArticleAdd.getTitle(), newArticleAdd.getContent(), newArticleAdd.getLocationId());
+        articleService.update(newArticleAdd.getArticleId(), newArticleAdd.getUserId(), newArticleAdd.getTitle(), newArticleAdd.getContent(), newArticleAdd.getLocationId());
+        return Result.success();
     }
 
     //Browse count + 1
     @PostMapping("/updatePopularity/{articleId}")
-    public void updatePopularity(@PathVariable Integer articleId)
+    public Result updatePopularity(@PathVariable Integer articleId)
     {
         articleService.updatePopularity(articleId);
+        return Result.success();
     }
 
     //get
-    @GetMapping("/getRecommendArticle")
-    public Result<List<SimplifiedArticle>> getRecommendArticle()
+    @GetMapping("/getRecommendArticle/{userId}")
+    public Result<List<SimplifiedArticle>> getRecommendArticle(@PathVariable Integer userId)
     {
-        List<SimplifiedArticle> recommendArticle = articleService.recommendArticle();
+        List<SimplifiedArticle> recommendArticle = articleService.recommendArticle(userId);
         return Result.success(recommendArticle);
     }
 
@@ -58,8 +60,8 @@ public class ArticleController {
     }
 
     //get article by title
-    @GetMapping("/getArticleByTitle/{title}")
-    public Result<SimplifiedArticle> getArticleByTitle(@PathVariable String title)
+    @GetMapping("/getArticleByTitle")
+    public Result<SimplifiedArticle> getArticleByTitle(@RequestBody String title)
     {
         SimplifiedArticle simplifiedArticle = articleService.getArticleByTitle(title);
         if (simplifiedArticle == null)
@@ -87,5 +89,13 @@ public class ArticleController {
         return Result.success(list);
     }
 
+    @GetMapping("/getArticleByLocationId/{locationId}")
+    public Result<List<SimplifiedArticle>> getArticleByLocationId(@PathVariable Integer locationId)
+    {
+        List<SimplifiedArticle> articleList = articleService.getArticleByLocation(locationId);
+        if(articleList == null)
+            return Result.error("no such location");
+        return Result.success(articleList);
+    }
 
 }

@@ -17,8 +17,14 @@ public class LocationController {
     private LocationService locationService;
 
     @GetMapping("")
-    public Result<List<Location>> getAllLocation(){
+    public Result<List<Location>> getLocation(){
         List<Location> list = locationService.getLocation();
+        return Result.success(list);
+    }
+
+    @GetMapping("/recommend/{userId}")
+    public Result<List<Location>> getRecommendLocation(@PathVariable Integer userId){
+        List<Location> list = locationService.getRecommendLocation(userId);
         return Result.success(list);
     }
 
