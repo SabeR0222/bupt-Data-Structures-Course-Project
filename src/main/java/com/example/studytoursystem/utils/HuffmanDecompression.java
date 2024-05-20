@@ -7,7 +7,6 @@ public class HuffmanDecompression {
     public static String decompress(String compressed, HashMap<Character, String> codes) {
         StringBuilder originalText = new StringBuilder();
         int index = 0;
-
         while (index < compressed.length()) {
             char currentChar = '\0';
             for (Map.Entry<Character, String> entry : codes.entrySet()) {
@@ -17,7 +16,6 @@ public class HuffmanDecompression {
                     break;
                 }
             }
-
             originalText.append(currentChar);
         }
 

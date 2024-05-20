@@ -126,7 +126,7 @@ public class ArticleServicelmpl implements ArticleService {
     public String getContent(Integer articleId) {
         if(articleMapper.findByArticleId(articleId) != null){
             Article article = articleMapper.findByArticleId(articleId);
-            String huffmanCodesJson = article.getHuffmanCodesJson();
+            String huffmanCodesJson = article.getHuffmanCodes();
             HashMap<Character, String> huffmanCodes = huffmanCodesFromJson(huffmanCodesJson);
             byte[] byteContent = article.getContent();
             StringBuilder stringBuilder = new StringBuilder();
@@ -196,11 +196,28 @@ public class ArticleServicelmpl implements ArticleService {
 
     private HashMap<Character, String> huffmanCodesFromJson(String huffmanCodesJson) {
         ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<Character, String> huffmanCodes = null;
-        try {
-            huffmanCodes = objectMapper.readValue(huffmanCodesJson, new TypeReference<HashMap<Character, String>>() {});
-        } catch (Exception e) {
-            System.out.println("JSON反序列化失败");
+        HashMap<Character, String> huffmanCodes = new HashMap<>();
+
+        // 分割字符串，得到键值对的列表
+        String[] pairs = huffmanCodesJson.split(",");
+
+        // 遍历键值对列表
+        for (int i = 0; i < pairs.length; i++) {
+            String pair = pairs[i];
+
+            // 分割键和值
+            String[] keyValue = pair.split(":");
+            char key = ' ';
+            if(i == 0){
+                key = keyValue[0].charAt(2);
+            }
+            else
+                key = keyValue[0].charAt(1);
+            String value = keyValue[1].substring(1, keyValue[1].length() - 1);
+            if(i == pairs.length - 1)
+                value = value.substring(0, value.length() - 1);
+            // 将键值对添加到HashMap中
+            huffmanCodes.put(key, value.toString());
         }
         return huffmanCodes;
     }

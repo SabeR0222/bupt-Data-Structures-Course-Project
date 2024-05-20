@@ -10,7 +10,7 @@ public class Article {
     private Integer userId;
     private String title;
     private byte[] content;
-    private String huffmanCodesJson;
+    private String huffmanCodes;
     private Integer locationId;
     private Integer popularity;
     private Double evaluation;
