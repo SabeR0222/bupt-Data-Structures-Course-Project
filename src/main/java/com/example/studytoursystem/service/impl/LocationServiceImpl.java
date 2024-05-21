@@ -111,9 +111,9 @@ public class LocationServiceImpl implements LocationService{
                     @Override
                     public int compare(Location o1, Location o2) {
                         if(o1.getPopularity() == o2.getPopularity()){
-                            return o2.getEvaluation() - o1.getEvaluation();
+                            return o1.getEvaluation() - o2.getEvaluation();
                         }
-                        return o2.getPopularity() - o1.getPopularity();
+                        return o1.getPopularity() - o2.getPopularity();
                     }
                 });
                 for(Location location : res){
@@ -124,18 +124,19 @@ public class LocationServiceImpl implements LocationService{
                 }
                 res = new ArrayList<>();
                 while(!myPriorityQueue.isEmpty()){
+                    System.out.println(myPriorityQueue.peek().getName());
                     res.add(myPriorityQueue.poll());
-                    System.out.println(myPriorityQueue.peek());
                 }
+
             }
             else {
                 MyPriorityQueue<Location> myPriorityQueue = new MyPriorityQueue<>(new Comparator<Location>() {
                     @Override
                     public int compare(Location o1, Location o2) {
-                        if(o1.getPopularity() == o2.getPopularity()){
-                            return o2.getPopularity() - o1.getPopularity();
+                        if(o1.getEvaluation() == o2.getEvaluation()){
+                            return o1.getPopularity() - o2.getPopularity();
                         }
-                        return o2.getEvaluation() - o1.getEvaluation();
+                        return o1.getEvaluation() - o2.getEvaluation();
                     }
                });
                 for(Location location : res){
@@ -146,9 +147,12 @@ public class LocationServiceImpl implements LocationService{
                 }
                 res = new ArrayList<>();
                 while(!myPriorityQueue.isEmpty()){
+                    System.out.println(myPriorityQueue.peek().getName());
                     res.add(myPriorityQueue.poll());
                 }
             }
+            //反转res
+            Collections.reverse(res);
         }
         System.out.println(res);
         List<Location> res2 = new ArrayList<>();
