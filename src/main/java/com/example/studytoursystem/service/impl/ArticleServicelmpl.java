@@ -2,11 +2,11 @@ package com.example.studytoursystem.service.impl;
 
 import com.example.studytoursystem.mapper.ArticleMapper;
 import com.example.studytoursystem.mapper.ArticleScoreMapper;
+import com.example.studytoursystem.mapper.LocationMapper;
 import com.example.studytoursystem.mapper.UserMapper;
 import com.example.studytoursystem.model.*;
 import com.example.studytoursystem.utils.*;
 import com.example.studytoursystem.service.ArticleService;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,11 @@ public class ArticleServicelmpl implements ArticleService {
     ArticleMapper articleMapper;
 
     @Autowired
+    LocationMapper locationMapper;
+
+    @Autowired
     UserMapper userMapper;
+
 
     @Override
     public boolean add(Integer userId,String title, String content, int locationId) {
@@ -134,7 +138,7 @@ public class ArticleServicelmpl implements ArticleService {
                 stringBuilder.append((char) (byteContent[i] + '0'));
             }
             String content = HuffmanDecompression.decompress(stringBuilder.toString(), huffmanCodes);
-            return content;
+            return content.replace("\\", "\n");
         }
         return null;
     }
@@ -142,6 +146,9 @@ public class ArticleServicelmpl implements ArticleService {
     @Override
     public SimplifiedArticle getArticleByTitle(String title) {
         List<Article> articles = articleMapper.getAllArticle();
+        String[] strings = title.split(":");
+        title = strings[1].substring(2, strings[1].length() - 4);
+        System.out.println(title);
         for(Article article : articles){
             if(article.getTitle().equals(title)){
                 return simplifyArticle(article);
@@ -151,7 +158,15 @@ public class ArticleServicelmpl implements ArticleService {
     }
 
     @Override
-    public List<SimplifiedArticle> getArticleByLocation(Integer locationId) {
+    public List<SimplifiedArticle> getArticleByLocation(String locationName) {
+        List<Location> locations = locationMapper.getAllLocation();
+        Integer locationId = 0;
+        for(Location location : locations){
+            if(location.getName().equals(locationName)){
+                locationId = location.getLocationId();
+                break;
+            }
+        }
         List<Article> articles = articleMapper.getAllArticle();
         List<SimplifiedArticle> res = new ArrayList<>();
         for(Article article : articles){
@@ -168,7 +183,19 @@ public class ArticleServicelmpl implements ArticleService {
     };
 
     private SimplifiedArticle simplifyArticle(Article article){
-        return new SimplifiedArticle(article.getArticleId(), article.getUserId(), article.getTitle(), article.getLocationId(), article.getPopularity(), article.getEvaluation());
+        List<Location> locations = locationMapper.getAllLocation();
+        String locationName = "";
+        for(Location location : locations){
+            if(location.getLocationId() == article.getLocationId())
+                locationName = location.getName();
+        }
+        List<User> users = userMapper.getAllUsers();
+        String userName = "";
+        for(User user : users){
+            if(user.getUserId() == article.getUserId())
+                userName = user.getUsername();
+        }
+        return new SimplifiedArticle(article.getArticleId(), userName, article.getTitle(), locationName, article.getPopularity(), article.getEvaluation());
     }
 
 
