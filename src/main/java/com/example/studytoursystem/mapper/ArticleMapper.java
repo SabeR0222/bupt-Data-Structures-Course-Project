@@ -16,7 +16,7 @@ public interface ArticleMapper {
     @Update("update articles set popularity = (#{popularity}) where (article_id = #{articleId})")
     void updatePopularity(int articleId, int popularity);
 
-    @Update("update articles set evaluation = (#{evaluation}) where (artucle_id = #{articleId})")
+    @Update("update articles set evaluation = (#{evaluation}) where (article_id = #{articleId})")
     void updateEvaluation(int articleId, double evaluation);
 
     @Delete("delete from articles where article_id = #{articleId}")

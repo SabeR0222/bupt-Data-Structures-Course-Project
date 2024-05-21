@@ -1,6 +1,5 @@
 package com.example.studytoursystem.controller;
 
-import com.example.studytoursystem.model.Article;
 import com.example.studytoursystem.model.NewArticleAdd;
 import com.example.studytoursystem.model.Result;
 import com.example.studytoursystem.model.SimplifiedArticle;
@@ -50,7 +49,6 @@ public class ArticleController {
 
 
     //content
-    //TODO: 报错：反序列化失败
     @GetMapping("/getContent/{articleId}")
     public Result<String> getContent(@PathVariable Integer articleId) {
         String content = articleService.getContent(articleId);
@@ -78,8 +76,10 @@ public class ArticleController {
 
 
     //search
-    @PostMapping("/search/{word}")
-    public Result<List<Map.Entry<Integer, Integer>>> search(@RequestBody String text, @PathVariable String word) {
+    @PostMapping("/search")
+    public Result<List<Map.Entry<Integer, Integer>>> search(@RequestBody Map<String, String> map) {
+        String text = map.get("text");
+        String word = map.get("word");
         List<Map.Entry<Integer, Integer>> list = articleService.searchWord(text, word);
         if (list == null)
             return Result.error("no such word");

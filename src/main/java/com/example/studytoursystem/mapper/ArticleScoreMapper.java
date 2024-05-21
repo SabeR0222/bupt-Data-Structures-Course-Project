@@ -17,7 +17,7 @@ public interface ArticleScoreMapper {
     @Select("select * from article_scores")
     List<ArticleScore> getAllScores();
 
-    @Update("update article_scores set score = (#{score}) where (article_id = #{articleId}, score = #{score})")
+    @Update("update article_scores set score = #{score} where article_id = #{articleId} and user_id = #{userId}")
     void update(int userId, int articleId, int score);
 
     @Insert("insert into article_scores(user_id, article_id, score) values(#{userId}, #{articleId}, #{score})")
