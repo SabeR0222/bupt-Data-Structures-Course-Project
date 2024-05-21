@@ -5,17 +5,17 @@ import lombok.Data;
 @Data
 public class SimplifiedArticle {
     private int articleId;
-    private Integer userId;
+    private String username;
     private String title;
-    private Integer locationId;
+    private String locationName;
     private Integer popularity;
     private Double evaluation;
 
-    public SimplifiedArticle(int articleId, Integer userId, String title, Integer locationId, Integer popularity, Double evaluation) {
+    public SimplifiedArticle(int articleId, String username, String title, String locationName, Integer popularity, Double evaluation) {
         this.articleId = articleId;
-        this.userId = userId;
+        this.username = username;
         this.title = title;
-        this.locationId = locationId;
+        this.locationName = locationName;
         this.popularity = popularity;
         this.evaluation = evaluation;
     }

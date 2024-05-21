@@ -39,7 +39,6 @@ public class ArticleController {
     }
 
     //get
-    //TODO: 应该返回location的name和user的name
     @GetMapping("/getRecommendArticle/{userId}")
     public Result<List<SimplifiedArticle>> getRecommendArticle(@PathVariable Integer userId) {
         List<SimplifiedArticle> recommendArticle = articleService.recommendArticle(userId);
@@ -56,9 +55,8 @@ public class ArticleController {
     }
 
     //get article by title
-    //TODO: 应该返回location的name和user的name
     @GetMapping("/getArticleByTitle")
-    public Result<SimplifiedArticle> getArticleByTitle(@RequestParam(required = false) String title) {
+    public Result<SimplifiedArticle> getArticleByTitle(@RequestBody String title) {
         SimplifiedArticle simplifiedArticle = articleService.getArticleByTitle(title);
         if (simplifiedArticle == null)
             return Result.error("no such article");
@@ -86,11 +84,9 @@ public class ArticleController {
         return Result.success(list);
     }
 
-    //TODO: 应该返回location的name和user的name
-    //TODO: 我传输的参数是一个String，根据String查找Article
-    @GetMapping("/getArticleByLocationId/{locationId}")
-    public Result<List<SimplifiedArticle>> getArticleByLocationId(@PathVariable Integer locationId) {
-        List<SimplifiedArticle> articleList = articleService.getArticleByLocation(locationId);
+    @GetMapping("/getArticleByLocation")
+    public Result<List<SimplifiedArticle>> getArticleByLocationId(@RequestParam(required = false) String location) {
+        List<SimplifiedArticle> articleList = articleService.getArticleByLocation(location);
         if (articleList == null)
             return Result.error("no such location");
         return Result.success(articleList);
