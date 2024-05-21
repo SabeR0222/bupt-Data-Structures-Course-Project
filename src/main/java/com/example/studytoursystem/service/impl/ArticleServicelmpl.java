@@ -146,9 +146,6 @@ public class ArticleServicelmpl implements ArticleService {
     @Override
     public SimplifiedArticle getArticleByTitle(String title) {
         List<Article> articles = articleMapper.getAllArticle();
-        String[] strings = title.split(":");
-        title = strings[1].substring(2, strings[1].length() - 4);
-        System.out.println(title);
         for(Article article : articles){
             if(article.getTitle().equals(title)){
                 return simplifyArticle(article);

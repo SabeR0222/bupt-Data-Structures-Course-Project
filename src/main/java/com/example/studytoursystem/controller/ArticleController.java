@@ -56,7 +56,7 @@ public class ArticleController {
 
     //get article by title
     @GetMapping("/getArticleByTitle")
-    public Result<SimplifiedArticle> getArticleByTitle(@RequestBody String title) {
+    public Result<SimplifiedArticle> getArticleByTitle(@RequestParam(required = false) String title) {
         SimplifiedArticle simplifiedArticle = articleService.getArticleByTitle(title);
         if (simplifiedArticle == null)
             return Result.error("no such article");
