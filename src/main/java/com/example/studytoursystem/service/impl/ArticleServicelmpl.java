@@ -95,11 +95,13 @@ public class ArticleServicelmpl implements ArticleService {
                 IdScoreMap.put(userId, scoreMap);
         }
         List<SimplifiedArticle> res = new ArrayList<>();
-        List<Map.Entry<Integer, Double>> userBasedCF = new UserBasedCF(IdScoreMap).recommend(currentUserId);
-        for(Map.Entry<Integer, Double> entry : userBasedCF){
-            Article article = articleMapper.findByArticleId(entry.getKey());
-            if(article != null){
-                res.add(simplifyArticle(article));
+        if(IdScoreMap.get(currentUserId) != null){
+            List<Map.Entry<Integer, Double>> userBasedCF = new UserBasedCF(IdScoreMap).recommend(currentUserId);
+            for(Map.Entry<Integer, Double> entry : userBasedCF){
+                Article article = articleMapper.findByArticleId(entry.getKey());
+                if(article != null){
+                    res.add(simplifyArticle(article));
+                }
             }
         }
         List<Article> articles = articleMapper.getAllArticle();
@@ -146,6 +148,7 @@ public class ArticleServicelmpl implements ArticleService {
     @Override
     public SimplifiedArticle getArticleByTitle(String title) {
         List<Article> articles = articleMapper.getAllArticle();
+        System.out.println(title);
         for(Article article : articles){
             if(article.getTitle().equals(title)){
                 return simplifyArticle(article);
