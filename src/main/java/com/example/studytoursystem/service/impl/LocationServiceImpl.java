@@ -1,5 +1,6 @@
 package com.example.studytoursystem.service.impl;
 
+import com.example.studytoursystem.controller.LocationController;
 import com.example.studytoursystem.mapper.LocationBrowseCountMapper;
 import com.example.studytoursystem.mapper.LocationMapper;
 import com.example.studytoursystem.mapper.UserMapper;
@@ -92,23 +93,62 @@ public class LocationServiceImpl implements LocationService{
                 }
             }
         }
-        System.out.println(res);
         if (query.getKeyword() != null) {
             Iterator<Location> iterator = res.iterator();
             while (iterator.hasNext()) {
                 Location location = iterator.next();
                 if (!Objects.equals(location.getKeyword(), query.getKeyword())) {
-                    System.out.println(location.getKeyword());
                     iterator.remove();
                 }
             }
         }
+
         if(query.getSortOrder() != null){
-            HeapSort<Location> heapSort = new HeapSort<>();
-            if(query.getSortOrder() == 1){
-                heapSort.sort(res, (o1, o2) -> o2.getPopularity() - o1.getPopularity());
-            }else{
-                heapSort.sort(res, (o1, o2) -> o2.getEvaluation() - o1.getEvaluation());
+            System.out.println("sortOrder" + query.getSortOrder());
+            //滑动窗口实现res的基于热度和评价进行排序
+            if (query.getSortOrder() == 1){
+                MyPriorityQueue<Location> myPriorityQueue = new MyPriorityQueue<>(new Comparator<Location>() {
+                    @Override
+                    public int compare(Location o1, Location o2) {
+                        if(o1.getPopularity() == o2.getPopularity()){
+                            return o2.getEvaluation() - o1.getEvaluation();
+                        }
+                        return o2.getPopularity() - o1.getPopularity();
+                    }
+                });
+                for(Location location : res){
+                    myPriorityQueue.offer(location);
+                    if(myPriorityQueue.size() > 10){
+                        myPriorityQueue.poll();
+                    }
+                }
+                res = new ArrayList<>();
+                while(!myPriorityQueue.isEmpty()){
+                    System.out.println(myPriorityQueue.peek().getName());
+                    res.add(myPriorityQueue.poll());
+                }
+            }
+            else {
+                MyPriorityQueue<Location> myPriorityQueue = new MyPriorityQueue<>(new Comparator<Location>() {
+                    @Override
+                    public int compare(Location o1, Location o2) {
+                        if(o1.getPopularity() == o2.getPopularity()){
+                            return o1.getPopularity() - o2.getPopularity();
+                        }
+                        return o1.getEvaluation() - o2.getEvaluation();
+                    }
+               });
+                for(Location location : res){
+                    myPriorityQueue.offer(location);
+                    if(myPriorityQueue.size() > 10){
+                        myPriorityQueue.poll();
+                    }
+                }
+                res = new ArrayList<>();
+                while(!myPriorityQueue.isEmpty()){
+                    System.out.println(myPriorityQueue.peek().getName());
+                    res.add(myPriorityQueue.poll());
+                }
             }
         }
         System.out.println(res);

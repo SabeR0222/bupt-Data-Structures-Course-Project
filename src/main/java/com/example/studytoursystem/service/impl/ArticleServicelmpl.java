@@ -120,7 +120,7 @@ public class ArticleServicelmpl implements ArticleService {
             return null;
         }
         for(int i = 0; i < places.size(); i++) {
-            res.add(new AbstractMap.SimpleEntry<>(places.get(i), i + n));
+            res.add(new AbstractMap.SimpleEntry<>(places.get(i), places.get(i) + n));
         }
         return res;
     }

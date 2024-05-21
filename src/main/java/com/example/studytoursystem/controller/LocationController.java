@@ -30,6 +30,7 @@ public class LocationController {
 
     @GetMapping("/query")
     public Result<List<Location>> getQueryLocation(@ModelAttribute LocationQuery query){
+        System.out.println(query);
         List<Location> list = locationService.getQueryLocation(query);
         return Result.success(list);
     }

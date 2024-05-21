@@ -8,9 +8,13 @@ public class MyPriorityQueue<T> {
     private int size;
     private final Comparator<? super T> comparator;
 
+    public int size(){
+        return size;
+    }
+
     public MyPriorityQueue(Comparator<? super T> comparator) {
         this.comparator = comparator;
-        queue = new Object[10]; // 初始容量，可根据需要调整
+        queue = new Object[11]; // 初始容量，可根据需要调整
     }
 
     private void resize(int capacity) {
