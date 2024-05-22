@@ -57,7 +57,7 @@ public class LocationServiceImpl implements LocationService{
 //
 //        return res2;
         List<LocationBrowseCount> locationBrowseCounts = locationBrowseCountMapper.getAllLocationBrowseCounts();
-        Map<Integer, Integer> userViewCounts = new HashMap<>();
+        Map<Integer, Integer> userViewCounts = (Map<Integer, Integer>) new MyHashMap<>();
         for(LocationBrowseCount locationBrowseCount : locationBrowseCounts) {
             if(locationBrowseCount.getUserId() == userId)
                 userViewCounts.put(locationBrowseCount.getLocationId(), locationBrowseCount.getCount());
