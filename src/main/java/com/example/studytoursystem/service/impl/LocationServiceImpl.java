@@ -57,7 +57,7 @@ public class LocationServiceImpl implements LocationService{
 //
 //        return res2;
         List<LocationBrowseCount> locationBrowseCounts = locationBrowseCountMapper.getAllLocationBrowseCounts();
-        Map<Integer, Integer> userViewCounts = (Map<Integer, Integer>) new MyHashMap<>();
+        Map<Integer, Integer> userViewCounts = new HashMap<>();
         for(LocationBrowseCount locationBrowseCount : locationBrowseCounts) {
             if(locationBrowseCount.getUserId() == userId)
                 userViewCounts.put(locationBrowseCount.getLocationId(), locationBrowseCount.getCount());
@@ -105,7 +105,7 @@ public class LocationServiceImpl implements LocationService{
 
         if(query.getSortOrder() != null){
             System.out.println("sortOrder" + query.getSortOrder());
-            //滑动窗口实现res的基于热度和评价进行排序
+            //优先队列实现res的基于热度和评价进行不完全排序
             if (query.getSortOrder() == 1){
                 MyPriorityQueue<Location> myPriorityQueue = new MyPriorityQueue<>(new Comparator<Location>() {
                     @Override
