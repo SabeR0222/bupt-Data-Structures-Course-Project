@@ -76,17 +76,17 @@ public class ArticleServicelmpl implements ArticleService {
     @Override
     public List<SimplifiedArticle> recommendArticle(Integer currentUserId) {
         List<ArticleScore> articleScores = articleScoreMapper.getAllScores();
-        Map<Integer, Map<Integer, Integer>> IdScoreMap = new HashMap<>();
+        Map<Integer, Map<Integer, Integer>> IdScoreMap = (Map<Integer, Map<Integer, Integer>>) new MyHashMap<>();
         HeapSort<ArticleScore> heapSort = new HeapSort<>();
         heapSort.sort(articleScores, (o1,o2) ->o1.getUserId() - o2.getUserId());
         Integer userId = null;
-        Map<Integer, Integer> scoreMap = new HashMap<>();
+        Map<Integer, Integer> scoreMap = (Map<Integer, Integer>) new MyHashMap<>();
         for(int i = 0; i < articleScores.size(); i++) {
             ArticleScore articleScore = articleScores.get(i);
             if(userId == null || !userId.equals(articleScore.getUserId())){
                 if(!scoreMap.isEmpty()){
                     IdScoreMap.put(userId, scoreMap);
-                    scoreMap = new HashMap<>();
+                    scoreMap = (Map<Integer, Integer>) new MyHashMap<>();
                 }
                 userId = articleScore.getUserId();
             }
