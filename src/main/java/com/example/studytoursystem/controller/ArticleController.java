@@ -42,7 +42,6 @@ public class ArticleController {
     @GetMapping("/getRecommendArticle/{userId}")
     public Result<List<SimplifiedArticle>> getRecommendArticle(@PathVariable Integer userId) {
         List<SimplifiedArticle> recommendArticle = articleService.recommendArticle(userId);
-        System.out.println(recommendArticle);
         return Result.success(recommendArticle);
     }
 
@@ -56,12 +55,11 @@ public class ArticleController {
 
     //get article by title
     @GetMapping("/getArticleByTitle")
-    public Result<SimplifiedArticle> getArticleByTitle(@RequestParam(required = false) String title) {
-        SimplifiedArticle simplifiedArticle = articleService.getArticleByTitle(title);
-        if (simplifiedArticle == null)
+    public Result<List<SimplifiedArticle>> getArticleByTitle(@RequestParam(required = false) String title) {
+        List<SimplifiedArticle> simplifiedArticleList = articleService.getArticleByTitle(title);
+        if (simplifiedArticleList == null)
             return Result.error("no such article");
-        System.out.println(simplifiedArticle);
-        return Result.success(simplifiedArticle);
+        return Result.success(simplifiedArticleList);
     }
 
     //delete

@@ -9,7 +9,7 @@ public class LocationBasedRecommend{
         List<Location> recommendations = new ArrayList<>();
 
         // 将地点按照类型和关键词分类
-        Map<String, List<Location>> locationMap = (Map<String, List<Location>>) new MyHashMap<>();
+        Map<String, List<Location>> locationMap = new HashMap<>();
         for (Location location : locations) {
             String key = location.getType() + "-" + location.getKeyword();
             locationMap.computeIfAbsent(key, k -> new ArrayList<>()).add(location);

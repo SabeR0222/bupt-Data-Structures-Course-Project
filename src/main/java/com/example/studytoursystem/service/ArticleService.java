@@ -18,7 +18,7 @@ public interface ArticleService {
 
     String getContent(Integer articleId);
 
-    SimplifiedArticle getArticleByTitle(String title);
+    List<SimplifiedArticle> getArticleByTitle(String title);
 
     List<SimplifiedArticle> getArticleByLocation(String locationName);
 }

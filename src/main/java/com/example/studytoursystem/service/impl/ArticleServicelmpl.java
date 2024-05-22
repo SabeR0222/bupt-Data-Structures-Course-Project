@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleServicelmpl implements ArticleService {
@@ -146,15 +147,21 @@ public class ArticleServicelmpl implements ArticleService {
     }
 
     @Override
-    public SimplifiedArticle getArticleByTitle(String title) {
+    public List<SimplifiedArticle> getArticleByTitle(String title) {
+        MyHashMap<String, List<Article>> articleMap = new MyHashMap<>();
+
         List<Article> articles = articleMapper.getAllArticle();
-        System.out.println(title);
-        for(Article article : articles){
-            if(article.getTitle().equals(title)){
-                return simplifyArticle(article);
+        for (Article article : articles) {
+            if (!articleMap.containsKey(article.getTitle())) {
+                articleMap.put(article.getTitle(), new ArrayList<>());
             }
+            articleMap.get(article.getTitle()).add(article);
         }
-        return null;
+
+        List<Article> foundArticles = articleMap.getOrDefault(title, Collections.emptyList());
+        return foundArticles.stream()
+                .map(this::simplifyArticle)
+                .collect(Collectors.toList());
     }
 
     @Override
