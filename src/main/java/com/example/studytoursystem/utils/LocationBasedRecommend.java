@@ -20,7 +20,7 @@ public class LocationBasedRecommend{
         sortedList.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
 
         // 获取浏览次数最高的前几个地点的类型和关键词，并基于此进行推荐
-        int numRecommendations = Math.min(10, sortedList.size()); // 设定推荐的最大数量为10个
+        int numRecommendations = sortedList.size(); // 设定推荐的最大类数量为Math.min(10, sortedList.size())个
         for (int i = 0; i < numRecommendations; i++) {
             Integer locationId = sortedList.get(i).getKey();
             for (Location location : locations) {
@@ -31,9 +31,10 @@ public class LocationBasedRecommend{
                         for (Location similarLocation : similarLocations) {
                             if (!similarLocation.getLocationId().equals(locationId) && !recommendations.contains(similarLocation.getLocationId())) {
                                 recommendations.add(similarLocation);
-                                if (recommendations.size() >= 5) {
-                                    return recommendations;
-                                }
+                                //设定最大推荐数量
+//                                if (recommendations.size() >= 5) {
+//                                    return recommendations;
+//                                }
                             }
                         }
                     }
