@@ -42,7 +42,11 @@ public class LocationBasedRecommend{
                 }
             }
         }
-
+        for(Location location : locations) {
+            if (!recommendations.contains(location)) {
+                recommendations.add(location);
+            }
+        }
         return recommendations;
     }
 }
