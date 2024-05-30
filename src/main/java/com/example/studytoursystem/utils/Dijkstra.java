@@ -6,7 +6,7 @@ import com.example.studytoursystem.model.graph.Graph;
 import java.util.*;
 
 public class Dijkstra {
-    public static int[] dijkstra(Graph graph, int srcId, int destId, int strategy) {
+    public static Map<String, Object> dijkstra(Graph graph, int srcId, int destId, int strategy) {
         int nodeCount = graph.getNodes().size();
         int[] distance = new int[nodeCount];
         int[] predecessor = new int[nodeCount];
@@ -19,12 +19,14 @@ public class Dijkstra {
         MyPriorityQueue<NodeDistance> pq = new MyPriorityQueue<>(Comparator.comparingInt(n -> n.distance));
         pq.offer(new NodeDistance(srcId, 0));
 
+        boolean foundPath = false;
         while (!pq.isEmpty()) {
             NodeDistance currentNode = pq.poll();
             int nodeId = currentNode.id;
 
             if (nodeId == destId) {
-                return getPath(predecessor, srcId, destId);
+                foundPath = true;
+                break;
             }
 
             for (Edge edge : graph.getNodes().get(nodeId).getEdges()) {
@@ -36,7 +38,12 @@ public class Dijkstra {
                 }
             }
         }
-        return null;
+        // 构建结果Map
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("distance", foundPath ? distance[destId] : Integer.MAX_VALUE);
+        resultMap.put("path", foundPath ? getPath(predecessor, srcId, destId) : null);
+
+        return resultMap;
     }
 
     private static int[] getPath(int[] predecessor, int srcId, int destId) {
