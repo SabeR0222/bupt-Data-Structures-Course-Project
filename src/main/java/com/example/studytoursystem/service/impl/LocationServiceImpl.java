@@ -68,7 +68,7 @@ public class LocationServiceImpl implements LocationService{
         for(int i = 0; i < (recommendationLocationId.size() > 10 ? 10 : recommendationLocationId.size()); i++){
             res2.add(recommendationLocationId.get(i));
         }
-        return recommendationLocationId;
+        return res2;
     }
 
 

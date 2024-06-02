@@ -30,7 +30,8 @@ public class LocationBasedRecommend{
                     if (similarLocations != null) {
                         for (Location similarLocation : similarLocations) {
                             if (!similarLocation.getLocationId().equals(locationId) && !recommendations.contains(similarLocation.getLocationId())) {
-                                recommendations.add(similarLocation);
+                                if(!recommendations.contains(similarLocation))
+                                    recommendations.add(similarLocation);
                                 //设定最大推荐数量
 //                                if (recommendations.size() >= 5) {
 //                                    return recommendations;
