@@ -6,7 +6,8 @@ import com.example.studytoursystem.mapper.VertexMapper;
 import com.example.studytoursystem.model.PathQuery;
 import com.example.studytoursystem.model.graph.Graph;
 import com.example.studytoursystem.service.PathService;
-import com.example.studytoursystem.utils.SimulatedAnnealingTSP;
+import com.example.studytoursystem.utils.HeldKarp;
+import com.example.studytoursystem.utils.SimulatedAnnealing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.studytoursystem.utils.Dijkstra;
@@ -39,15 +40,18 @@ public class PathServiceImpl implements PathService {
             for (int i = 0; i < query.getDestIdList().size(); i++) {
                 pathList[i + 1] = query.getDestIdList().get(i);
             }
-            System.out.println("PathList: " + Arrays.toString(pathList));
             int[][] distanceMatrix = new int[query.getDestIdList().size() + 1][query.getDestIdList().size() + 1];
             for (int i = 0; i < pathList.length; i++) {
                 for (int j = 0; j < pathList.length; j++) {
                     distanceMatrix[i][j] = (int) Dijkstra.dijkstra(graph, pathList[i], pathList[j], query.getStrategy()).get("distance");
                 }
             }
-            int[] bestPath = SimulatedAnnealingTSP.solveTSP(distanceMatrix);
-            // 构建完整路径，注意处理循环回初始点的情况
+            int[] bestPath = null;
+            if (pathList.length <= 10) {
+                bestPath = HeldKarp.heldKarp(distanceMatrix);
+            } else {
+                bestPath = SimulatedAnnealing.simulatedAnnealing(distanceMatrix);
+            }
             fullPath.add(pathList[bestPath[0]]); // 添加起始点
             for (int i = 0; i < bestPath.length; i++) {
                 int nextNodeIndex = (i + 1) % bestPath.length; // 循环访问，确保最后一个连接回到起点

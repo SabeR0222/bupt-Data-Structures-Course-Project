@@ -3,13 +3,13 @@ package com.example.studytoursystem.utils;
 import java.util.Arrays;
 import java.util.Random;
 
-public class SimulatedAnnealingTSP {
+public class SimulatedAnnealing {
 
     private static final double INITIAL_TEMPERATURE = 1000; // 初始温度
     private static final double COOLING_RATE = 0.99; // 冷却率
     private static final Random random = new Random();
 
-    public static int[] solveTSP(int[][] distanceMatrix) {
+    public static int[] simulatedAnnealing(int[][] distanceMatrix) {
         int cityCount = distanceMatrix.length;
         int[] currentSolution = generateInitialSolution(cityCount);
         int currentCost = calculateTotalDistance(distanceMatrix, currentSolution);
