@@ -5,6 +5,7 @@ import com.example.studytoursystem.model.Spot;
 import com.example.studytoursystem.model.SpotQuery;
 import com.example.studytoursystem.model.Vertex;
 import com.example.studytoursystem.service.SpotService;
+import com.example.studytoursystem.utils.QuickSort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.studytoursystem.utils.InsertSort;
@@ -67,7 +68,11 @@ public class SpotServiceImpl implements SpotService {
 
         // Sorting
         Comparator<Spot> byDistanceComparator = Comparator.comparing(Spot::getDistance);
-        InsertSort.insertSort(spotList, byDistanceComparator);
+        if(spotList.size() < 10) {
+            InsertSort.insertSort(spotList, byDistanceComparator);
+        }else {
+            QuickSort.quickSort(spotList, byDistanceComparator);
+        }
         return spotList;
     }
 }
