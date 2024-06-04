@@ -26,11 +26,6 @@ public class UserController {
         return Result.error("用户名或密码错误");
     }
 
-//    @PostMapping("/logout")
-//    public Result logout(){
-//        return Result.success();
-//    }
-
     @PostMapping("/register")
     public Result register(@RequestBody Map<String, String> registerData){
         String username = registerData.get("username");

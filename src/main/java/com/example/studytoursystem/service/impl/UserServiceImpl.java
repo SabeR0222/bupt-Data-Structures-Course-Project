@@ -13,6 +13,7 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+
     @Override
     public User findByUsername(String username) {
         return userMapper.findByUsername(username);
@@ -24,10 +25,10 @@ public class UserServiceImpl implements UserService {
         String password = loginData.get("password");
         List<User> users = userMapper.getAllUsers();
         User user1 = null;
-        for(User user : users){
-            if(user.getUsername().equals(username)){
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
                 user1 = user;
-                if(password.equals(user1.getPassword())){
+                if (password.equals(user1.getPassword())) {
                     return user1.getUserId();
                 }
                 return null;
@@ -38,6 +39,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(String username, String password) {
-        userMapper.add(username,password);
+        userMapper.add(username, password);
     }
 }
