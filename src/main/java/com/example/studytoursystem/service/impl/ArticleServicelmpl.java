@@ -41,15 +41,15 @@ public class ArticleServicelmpl implements ArticleService {
         return true;
     }
 
-//    @Override
-//    public boolean delete(int articleId, int userId) {
+    @Override
+    public boolean delete(int articleId, int userId) {
 //        if (articleMapper.findByArticleId(articleId).getUserId() != userId) {
 //            return false;
 //        }
-//        articleMapper.delete(articleId);
-//        articleScoreMapper.delete(articleId);
-//        return true;
-//    }
+        articleScoreMapper.delete(articleId);
+        articleMapper.delete(articleId);
+        return true;
+    }
 
     @Override
     public boolean update(int articleId, int userId, String title, String content, int locationId) {

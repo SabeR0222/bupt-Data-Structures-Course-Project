@@ -2,10 +2,7 @@ package com.example.studytoursystem.mapper;
 
 import com.example.studytoursystem.model.User;
 import com.example.studytoursystem.model.ArticleScore;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -22,4 +19,7 @@ public interface ArticleScoreMapper {
 
     @Insert("insert into article_scores(user_id, article_id, score) values(#{userId}, #{articleId}, #{score})")
     void insert(int userId, int articleId, int score);
+
+    @Delete("delete from article_scores where article_id = #{articleId}")
+    void delete(int articleId);
 }

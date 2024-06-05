@@ -8,10 +8,15 @@ import java.util.Map;
 
 public interface ArticleService {
     boolean add(Integer userId, String title, String content, int locationId);
-//    boolean delete(int articleId, int userId);
+
+    boolean delete(int articleId, int userId);
+
     boolean update(int articleId, int userId, String title, String content, int locationId);
+
     void updatePopularity(int articleId);
+
     Article getArticle(int articleId);
+
     List<SimplifiedArticle> recommendArticle(Integer userId);
 
     List<Map.Entry<Integer, Integer>> searchWord(String text, String word);

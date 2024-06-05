@@ -62,13 +62,13 @@ public class ArticleController {
         return Result.success(simplifiedArticleList);
     }
 
-    //delete
-//    @PostMapping("/delete/{articleId}/{userId}")
-//    public Result delete(@PathVariable int articleId, @PathVariable int userId) {
-//        if (articleService.delete(articleId, userId) == false)
-//            return Result.error("delete failed");
-//        return Result.success();
-//    }
+    // delete
+    @PostMapping("/delete/{articleId}/{userId}")
+    public Result delete(@PathVariable int articleId, @PathVariable int userId) {
+        if (!articleService.delete(articleId, userId))
+            return Result.error("delete failed");
+        return Result.success();
+    }
 
 
     //search
