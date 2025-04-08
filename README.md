@@ -22,85 +22,87 @@
 ### 2.6 交通工具的最短时间策略
 交通工具的最短时间，对于每一次遍历我们采用迪杰斯特拉算法；在每一次dijkstra以便学生在规划游学路线时能够快速找到最优的交通方式。利用动态规划，分析游学目的地之间的交通网络，计算出最短路径和最短时间，并将结果直观地展示给用户。考虑交通工具的不同出行时间和路线，综合考虑时间和成本因素，为学生提供多样化的出行选择，满足其个性化需求。
 
-├── 📁 `main`
-│   ├── 📁 `java`
-│   │   └── 📁 `com`
-│   │       └── 📁 `example`
-│   │           └── 📁 `studytoursystem`
-│   │               ├── ☕ `StudyTourSystemApplication.java`
-│   │               ├── 📁 `controller`
-│   │               │   ├── ☕ `ArticleController.java`
-│   │               │   ├── ☕ `ArticleScoreController.java`
-│   │               │   ├── ☕ `LocationBrowseController.java`
-│   │               │   ├── ☕ `LocationController.java`
-│   │               │   ├── ☕ `PathController.java`
-│   │               │   ├── ☕ `SpotController.java`
-│   │               │   ├── ☕ `UserController.java`
-│   │               │   └── ☕ `VertexController.java`
-│   │               ├── 📁 `mapper`
-│   │               │   ├── ☕ `ArticleMapper.java`
-│   │               │   ├── ☕ `ArticleScoreMapper.java`
-│   │               │   ├── ☕ `LocationBrowseCountMapper.java`
-│   │               │   ├── ☕ `LocationMapper.java`
-│   │               │   ├── ☕ `PathMapper.java`
-│   │               │   ├── ☕ `UserMapper.java`
-│   │               │   └── ☕ `VertexMapper.java`
-│   │               ├── 📁 `model`
-│   │               │   ├── ☕ `Article.java`
-│   │               │   ├── ☕ `ArticleScore.java`
-│   │               │   ├── ☕ `Edge.java`
-│   │               │   ├── ☕ `EdgeNode.java`
-│   │               │   ├── ☕ `Location.java`
-│   │               │   ├── ☕ `LocationBrowseCount.java`
-│   │               │   ├── ☕ `LocationBrowsePlus.java`
-│   │               │   ├── ☕ `LocationQuery.java`
-│   │               │   ├── ☕ `NewArticleAdd.java`
-│   │               │   ├── ☕ `PathQuery.java`
-│   │               │   ├── ☕ `Result.java`
-│   │               │   ├── ☕ `SimplifiedArticle.java`
-│   │               │   ├── ☕ `Spot.java`
-│   │               │   ├── ☕ `SpotQuery.java`
-│   │               │   ├── ☕ `User.java`
-│   │               │   ├── ☕ `Vertex.java`
-│   │               │   └── 📁 `graph`
-│   │               │       ├── ☕ `Edge.java`
-│   │               │       ├── ☕ `Graph.java`
-│   │               │       └── ☕ `Node.java`
-│   │               ├── 📁 `service`
-│   │               │   ├── ☕ `ArticleScoreService.java`
-│   │               │   ├── ☕ `ArticleService.java`
-│   │               │   ├── ☕ `LocationBrowseCountService.java`
-│   │               │   ├── ☕ `LocationService.java`
-│   │               │   ├── ☕ `PathService.java`
-│   │               │   ├── ☕ `SpotService.java`
-│   │               │   ├── ☕ `UserService.java`
-│   │               │   ├── ☕ `VertexService.java`
-│   │               │   └── 📁 `impl`
-│   │               │       ├── ☕ `ArticleScoreServicelmpl.java`
-│   │               │       ├── ☕ `ArticleServicelmpl.java`
-│   │               │       ├── ☕ `LocationBrowseCountServicelmpl.java`
-│   │               │       ├── ☕ `LocationServiceImpl.java`
-│   │               │       ├── ☕ `PathServiceImpl.java`
-│   │               │       ├── ☕ `SpotServiceImpl.java`
-│   │               │       ├── ☕ `UserServiceImpl.java`
-│   │               │       └── ☕ `VertexSeriveImpl.java`
-│   │               └── 📁 `utils`
-│   │                   ├── ☕ `BoyerMooreChinese.java`
-│   │                   ├── ☕ `CustomHashMap.java`
-│   │                   ├── ☕ `Dijkstra.java`
-│   │                   ├── ☕ `HeapSort.java`
-│   │                   ├── ☕ `HeldKarp.java`
-│   │                   ├── ☕ `HuffmanCompression.java`
-│   │                   ├── ☕ `HuffmanDecompression.java`
-│   │                   ├── ☕ `HuffmanNode.java`
-│   │                   ├── ☕ `InsertSort.java`
-│   │                   ├── ☕ `LocationBasedRecommend.java`
-│   │                   ├── ☕ `MyHashMap.java`
-│   │                   ├── ☕ `MyPriorityQueue.java`
-│   │                   ├── ☕ `SimulatedAnnealing.java`
-│   │                   └── ☕ `UserBasedCF.java`
-│   └── 📁 `resources`
-│       ├── 🗎 `application.properties`
-│       └── 📁 `database`
-│           └── 🗎 `study_tour_system.sql`
-└── 📁 `test`
+## 项目结构
+- 📁 main
+  - 📁 java
+    - 📁 com
+      - 📁 example
+        - 📁 studytoursystem
+          - ☕ `StudyTourSystemApplication.java` //启动文件
+          - 📁 controller
+            - ☕ `ArticleController.java`
+            - ☕ `ArticleScoreController.java`
+            - ☕ `LocationBrowseController.java`
+            - ☕ `LocationController.java`
+            - ☕ `PathController.java`
+            - ☕ `SpotController.java`
+            - ☕ `UserController.java`
+            - ☕ `VertexController.java`
+          - 📁 mapper
+            - ☕ `ArticleMapper.java`
+            - ☕ `ArticleScoreMapper.java`
+            - ☕ `LocationBrowseCountMapper.java`
+            - ☕ `LocationMapper.java`
+            - ☕ `PathMapper.java`
+            - ☕ `UserMapper.java`
+            - ☕ `VertexMapper.java`
+          - 📁 model
+            - ☕ `Article.java`
+            - ☕ `ArticleScore.java`
+            - ☕ `Edge.java`
+            - ☕ `EdgeNode.java`
+            - ☕ `Location.java`
+            - ☕ `LocationBrowseCount.java`
+            - ☕ `LocationBrowsePlus.java`
+            - ☕ `LocationQuery.java`
+            - ☕ `NewArticleAdd.java`
+            - ☕ `PathQuery.java`
+            - ☕ `Result.java`
+            - ☕ `SimplifiedArticle.java`
+            - ☕ `Spot.java`
+            - ☕ `SpotQuery.java`
+            - ☕ `User.java`
+            - ☕ `Vertex.java`
+            - 📁 graph
+              - ☕ `Edge.java`
+              - ☕ `Graph.java`
+              - ☕ `Node.java`
+          - 📁 service
+            - ☕ `ArticleScoreService.java`
+            - ☕ `ArticleService.java`
+            - ☕ `LocationBrowseCountService.java`
+            - ☕ `LocationService.java`
+            - ☕ `PathService.java`
+            - ☕ `SpotService.java`
+            - ☕ `UserService.java`
+            - ☕ `VertexService.java`
+            - 📁 impl
+              - ☕ `ArticleScoreServicelmpl.java`
+              - ☕ `ArticleServicelmpl.java`
+              - ☕ `LocationBrowseCountServicelmpl.java`
+              - ☕ `LocationServiceImpl.java`
+              - ☕ `PathServiceImpl.java`
+              - ☕ `SpotServiceImpl.java`
+              - ☕ `UserServiceImpl.java`
+              - ☕ `VertexSeriveImpl.java`
+          - 📁 utils
+            - ☕ `BoyerMooreChinese.java`
+            - ☕ `CustomHashMap.java`
+            - ☕ `Dijkstra.java`
+            - ☕ `HeapSort.java`
+            - ☕ `HeldKarp.java`
+            - ☕ `HuffmanCompression.java`
+            - ☕ `HuffmanDecompression.java`
+            - ☕ `HuffmanNode.java`
+            - ☕ `InsertSort.java`
+            - ☕ `LocationBasedRecommend.java`
+            - ☕ `MyHashMap.java`
+            - ☕ `MyPriorityQueue.java`
+            - ☕ `SimulatedAnnealing.java`
+            - ☕ `UserBasedCF.java`
+- 📁 resources
+  - 📄 `application.properties`
+  - 📁 database
+    - 🗎 `study_tour_system.sql`
+- 📁 test
+
